@@ -1,0 +1,77 @@
+---
+title: "CBB-Metadata_Apr28-2020"
+author: "Sabah Ul-Hasan"
+output: pdf_document
+---
+
+Install Relevant Packages, Load Libraries 
+```{r}
+
+# Package installation
+# Uncomment packages to re-install or update the versions
+# Check version of R + RStudio when running into installation trouble
+
+## Need package for downloading data directly from Github
+### install.packages("RCurl") 
+### packageVersion("RCurl") # v1.98.1.1 
+
+## Need package to create word clouds
+### install.packages("wordcloud")
+### packageVersion("wordcloud") # v2.6
+
+## Need package for visualization of data 
+### install.packages("ggplot2") 
+### packageVersion("ggplot2") # v3.3.0
+
+## Need package to compile images as a unified figure
+### install.packages("cowplot")
+### packageVersion("cowplot") # v1.0.0
+
+
+
+# Load libraries directly, if packages previously installed 
+library("RCurl")
+library("wordcloud")
+library("ggplot2")
+library("cowplot") 
+
+```
+
+Visualizations
+```{r}
+
+# Upload Data 
+df <- read.csv(text=getURL("https://raw.githubusercontent.com/SuLab/TSRI-CBB/master/CBB-Metadata/TSRI%20CBB%20Listserv%20-%20Intros-Metadata.csv")) 
+summary(df) # Quick view of data
+
+# Word cloud of 'Topics' column
+require(devtools)
+install_github("lchiffon/wordcloud2")
+library(wordcloud2)
+
+library(dplyr)
+test<-df$Topics
+wordcloud2(test, size=1.6)
+
+test <- df$Topics %>%
+  na.omit() %>%
+  as.character() %>%
+  strsplit(" ") %>%
+  unlist() %>% 
+  table() %>%
+  sort(decreasing = TRUE)
+test <- data.frame(test)
+
+
+
+sys.plot <- ggplot(sys, aes(x = category, y = value, fill = category)) +
+  geom_boxplot() + # Creates boxplots
+  geom_point() + # Adds data points
+  labs(x="", y = "Nocturnal systolic blood pressure (mm Hg)") + # Labels axes
+  theme(legend.position = "none") # Removes automaticlaly included legend
+sys.plot # View of plot
+
+## What does this data mean, what belongs where for Fig 5a?
+### What's the difference between this data set and raw data? How can we access the raw data, and why?
+
+```
