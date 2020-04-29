@@ -1,0 +1,59 @@
+---
+title: "Dec19_JerryZak_ObjectOrientedProgramming"
+author: "Sabah Ul-Hasan"
+date: "12/19/2019"
+output: html_document
+---
+
+Base R data structures
+```{r}
+
+# R is mosntly: Lists, vectors, matrices, and data frames
+# But data we work with is actually more complex
+# Disconnect between the tools bioinformaticians use vs the default software
+
+# How to bridge the two? Hadley Wickham's Advanced R ==> Functional OOP (R) vs Encapsulated OOP (Python)
+# Focus on functions is good because it aligns with our interests as biologists (in contrast to developers)
+# Methods: Functions that are specific for an object type
+# https://adv-r.hadley.nz/ 
+# Base types found in Section 12.3
+  
+# Predecessor of R was S, with no support for objects
+# Many of the original base functions run in C, and you can't find the source code
+# Example
+print
+# function (x, ...) 
+# UseMethod("print")
+# <bytecode: 0x7fe341fac4b0>
+# <environment: namespace:base>
+
+# Package to identify which are base functions and which are not
+install.packages("sloop")
+library(sloop)
+packageVersion("sloop") # v1.0.1
+
+# Non-base R
+# 1st - S3 you need to be disciplined here, since it will let you do things that shouldn't work
+# 2nd - S4 (more unified and rigorous): what most applied bioinformaticians work with every day (ie RNASeq) 
+# 3rd - R6 (built upon previous, etc)
+
+# Example
+lettervector <- c("a", "b", "c")
+class(lettervector) # character
+sloop::otype(lettervector) # not S3, S4, or R6 -- it's a hard-coded function written in C
+
+# S3 example
+numbervector <- c(1,2,3)
+df <- data.frame(lettervector, numbervector)
+sloop::otype(df) # S3; meaning dataframes were introduced with this version
+sloop::otype(data.frame()) # Also S3
+
+# Advantages of why to understand OOP 
+# When we know what object type we're working with, then 
+# We can query it manually to further see what component belong to what
+# 1) This allows us to 'see' what is happening with that data (which isn't always possible with base R)
+# 2) And then we can add things to the objects directly (with annotations)
+# Can we do the revese where we an see the breakdown of all base, S3, S4, and R6 in a package?
+
+```
+

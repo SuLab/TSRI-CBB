@@ -1,0 +1,95 @@
+---
+title: "RTopics_Feb14_LinearModels-SUH"
+author: "Sabah Ul-Hasan"
+date: "2/14/2020"
+output: html_document
+---
+
+Attendance: Nava, Marcela, Yuren, Sabah, Jerry
+
+Overview of linear regression
+```{r}
+
+# The most simplest form of determining a correlation between two variables (x and y)
+# linear regression =
+# linear approach to model in a relationship between a dependent vs independent variable
+
+# Car dataset (play dataset available in R)
+cars <- cars 
+str(cars) # 50 cars, x = speed (independent variable), y = distance (dependent variable)
+# RNASeq example: x is a gene, y is an expression level
+
+# Question: Is there a relationship between the speed of the car (mph) to miles it travels?
+plot(cars$dist~cars$speed) # Simple scatter plot
+plot(cars$dist~cars$speed) + abline(lm(cars$dist~cars$speed), col="red") # With slope
+# ggplot2 or ggpubr (data viz tutorials)
+
+# Get statistics of the relationship
+model <- lm(cars$dist~cars$speed)
+plot(model)
+# More info at: https://data.library.virginia.edu/diagnostic-plots/ 
+# From Marcela on the plots of the model (tests if the assumptions are TRUE)
+## Residuals: How far each point is from the mean (you want this to be uniform)
+## QQ plot: Checking if the residuals fit a distribution (you want these to follow the dashed line)
+## Scale-Location: That all observations have the same or equal variance (homoscedasticity)
+## Residuals vs Leverage: What is every point's influenced on drawing the length?
+### Each point has a residual, the leverage is the level of importance of a point fitting that line
+### Cook's distance is a measure of point fit: You don't want the points to be past Cook's distance
+#### Why use Cook's distance, is there a better measure?
+
+# Assumptions of a linear model (which we can view by plotting 'model' above with the 4 output)
+## Linear relationship
+## Multivariate normality
+## No or little multicollinearity
+## No auto-correlation
+## Homoscedasticity
+## Typical rule of thumb is n = 20 sample size for analysis (power analysis package)
+### Biological cases of n < 20, and how to approach?
+
+modsum <- summary(model) # this is where we get all our info from the linear model
+modsum
+modsum$adj.r.squared # r2 = 0.6438102, statistical significant?
+modsum$coefficients[2,4] # p-value (Answer: yes, significant relationship)
+# t test (statistical significance) for the p value
+# intercept = 1.231882e-02 (rejects the null hypothesis... or test for linearity?)
+# other variable(s) = 1.489836e-12  (significant relationship between speed and distance)
+modsum$coefficients # coefficients of the model
+
+```
+
+Overview of the lm() function
+```{r}
+
+# How is it made?
+?lm()
+
+# View source code
+getAnywhere(lm)
+getAnywhere(model.response)
+
+# https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/lm
+# lm(formula, data, subset, weights, na.action,
+## method = "qr", model = TRUE, x = FALSE, y = FALSE, qr = TRUE,
+## singular.ok = TRUE, contrasts = NULL, offset, …)
+
+# What do the coefficients mean?
+# https://feliperego.github.io/blog/2015/10/23/Interpreting-Model-Output-In-R 
+# https://biologyforfun.wordpress.com/2014/11/23/interpreting-regression-coefficient-in-r/ 
+# https://data.library.virginia.edu/diagnostic-plots/ 
+
+```
+
+
+lm vs glm vs gam
+```{r}
+
+# lm and glm are more or less th esame, but 
+# lm uses least squares and
+# glm uses likelihood (for Akaike Information Criterion or AIC values) 
+# gam is useful when exploring covariates
+# https://christophm.github.io/interpretable-ml-book/extend-lm.html 
+
+# glms next time (a month from now) -- Marcela 
+# gms 
+
+```
