@@ -1,0 +1,133 @@
+---
+title: "Rmarkdown (Part II)"
+author: "Hao Ye"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+css: styles.css
+output:
+  html_document:
+    toc: false
+    number_sections: true
+---
+
+# R Markdown Output Types
+
+- Document (HTML / PDF / Word)
+- Presentation (HTML / PDF)
+- Shiny (interactive HTML)
+- Custom Template
+
+# Code Chunk Options
+
+Basic syntax for a code chunk in Rmarkdown:
+
+<pre><code>```{r *label*, *options*}
+*R code*
+```</code></pre>
+
+## Chunk Labels
+
+Labeling your code chunks is optional, but if done, labels need to be unique. This labeling allows you to assign a descriptive name for each code chunk, which then helps when looking at the debug output or error logs.
+
+## Chunk Options
+
+The normal behavior for R code chunks is to display both the code within the chunk itself and its output to the output document. However, we can set the options to change this behavior (and others) for each individual chunk or use the command `opts_chunk$set()` to set default global options.
+
+### echo
+
+The `echo` parameter controls whether to display the current code chunk (default is `TRUE`)
+
+### eval
+
+The `eval` parameter controls whether to evaluate the current code chunk (default is `TRUE`)
+
+### results
+
+The `results` parameter controls the formatting of the output:
+- `"markup"` formats the raw results using the appropriate *output hook* (basically, the output is processed according to the type)
+- `"asis"` writes the raw results from R into the output
+- `"hold"` defers the output until the end of the chunk
+- `"hide"` hides normal R output
+
+### warning / message
+
+The `warning` and `message` parameters control whether warnings and messages are shown in the output.
+
+### cache
+
+The `cache` parameter (and several related options) determines whether to save the output and R objects created by a code chunk. It saves the output when the chunk is evaluated for the first time (with `cache` set to `TRUE`) and loads it when the chunk is run. The association is by chunk label and MD5 checksum of the code, so changes to the label or code will cause the cache to be generated again.
+
+- `cache.path` can set a custom directory for the cache files
+- `cache.vars` can set the variables to be saved
+- `cache.comments` determines whether changing comments in the R code chunk will affect the cache
+- `cache.rebuild` will rebuild the cache even if `cache = TRUE` and no changes were made.
+- `dependson` specifies which previous *cached* chunks the current chunk depends on. If R detects that a depended on chunk has changed, it will rebuild the cache for the current chunk.
+
+# Citations and Bibliographies
+
+Rmarkdown also has the capability to support citations and bibliographies.
+
+## Bibliography
+
+First, we need to get our bibliography associated with our Rmarkdown file. For this, we can use the `bibliography` metadata field to specify a bibliography file. Several different filetypes are supported, including .bib, .ris, and .enl. 
+
+References can also be embedded in the metadata directly, though this is probably more effort than it's worth.
+
+## Citations
+
+Citations are creatures using square brackets and the `@` symbol, followed by the citation key for a particular reference. Multiple references can be simultaneously cited using semicolons, `;`, for separation.
+
+- `Blah blah [@doe99].`
+- `Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].`
+- `Smith says blah [-@smith04].`
+- `@smith04 says blah.`
+- `@smith04 [p. 33] says blah.`
+
+## References List
+
+The final references list appears at the end of the document, and only includes those cited in the text. It is recommended to start a new references section to contain this list. References that are not cited can be included in this list by using a `nocite` metadata field.
+
+## References Formatting
+
+By default, citations use Chicago author-date style formatting. Alternative styles are supported through the use of CSL files, which can be specified in the `csl` metadata field. Style files for popular journals or publishers can be found online (see links below).
+
+# General Formatting
+
+A table of contents can be added to most document styles by adding a `toc` metadata field and setting it to `true`. Further customization can be done using `toc_depth` and `number_sections`.
+
+Formatting of HTML documents can be done by specifying a CSS file using the `css` metadata field. For more details, see the below links.
+
+# rgl and 3d plots
+
+We can also embed 3d plots generated using the `rgl` package. For both pdf and html outputs, this can be accomplished by a specific hook to capture the output as a static image:
+```{r setup rgl hook}
+library(knitr)
+library(rgl)
+knit_hooks$set(rgl = hook_rgl)
+```
+
+```{r make rgl plot, rgl = TRUE}
+open3d()
+x <- sort(rnorm(1000))
+y <- rnorm(1000)
+z <- rnorm(1000) + atan2(x, y)
+plot3d(x, y, z, col = rainbow(1000))
+```
+
+## webgl
+
+More intriguingly, we can also enable interactive 3d graphics in HTML documents by using a different hook:
+```{r setup webgl hook}
+knit_hooks$set(webgl = hook_webgl)
+```
+
+```{r make webgl plot, webgl = TRUE}
+plot3d(x, y, z, col = rainbow(1000))
+```
+
+# Links
+- More formatting details for [HTML](http://rmarkdown.rstudio.com/html_document_format.html), [PDF](http://rmarkdown.rstudio.com/pdf_document_format.html), and [Word](http://rmarkdown.rstudio.com/word_document_format.html) formats.
+- [More info on knitr chunk options](http://yihui.name/knitr/options/)
+- [More info on custom knitr hooks](http://yihui.name/knitr/hooks/)
+- [More info on citations](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
+- [CSL files for various journals](https://github.com/citation-style-language/styles)
+
