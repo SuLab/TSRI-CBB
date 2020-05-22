@@ -8,10 +8,12 @@ chunk of machine learning code as an example:
 """
 
 # Imports are ordered alphabetically, but note all the "tensorflow" imports are in a block
-# I think of these as two "paragraphs"
+# I think of these as three "paragraphs". The first is for importing built-ins. The third is
+# all code from one library. The second is just the "other" 3rd party libraries.
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 from PIL import Image, ImageOps
 
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
@@ -54,7 +56,8 @@ def main():
         'tulip': 4
     } 
 
-    x_train, y_train, x_validation, y_validation = prepare_dataset(flower_dataset_directory, image_classes, validation_split)
+    images, labels = prepare_dataset(flower_dataset_directory, image_classes, validation_split)
+    x_train, y_train, x_validation, y_validation = validation_split(images, labels)
 
     # Data generators let us syntheticallty expand our dataset
     # Which helps as our dataset is quite small for a neural network (note: "why")
@@ -73,8 +76,8 @@ def main():
 
     base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=(image_size, image_size, color_channels))
     old_top = base_model.output
-    old_top = GlobalAveragePooling2D()(old_top)
-    new_top = Dense(len(image_classes), activation='softmax')(old_top)
+    global_avg_pooling = GlobalAveragePooling2D()(old_top)
+    new_top = Dense(len(image_classes), activation='softmax')(global_avg_pooling)
     model = Model(inputs=base_model.input, outputs=new_top)
 
     # We have a small amount of data, but the data is pretty similar
@@ -85,27 +88,28 @@ def main():
         layer.trainable = False
 
     model.compile(optimizer=optimizer, loss=loss_function, metrics=metrics)
-    history = model.fit_generator(train_generator.flow(x_train, y_train, batch_size=batch_size), 
-                        steps_per_epoch=len(x_train) // batch_size, 
-                        epochs=number_of_epochs,
-                        validation_data=validation_generator.flow(x_validation, y_validation),
-                        validation_steps=len(x_validation) // batch_size
+
+    training_data_flow = train_generator.flow(x_train, y_train, batch_size=batch_size)
+    validation_data_flow = validation_generator.flow(x_validation, y_validation)
+    history = model.fit_generator(
+        training_data_flow, 
+        steps_per_epoch=len(x_train) // batch_size, 
+        validation_data=validation_data_flow,
+        validation_steps=len(x_validation) // batch_size,
+        epochs=number_of_epochs
     )
 
     plot_training_history(history, model)
 
 
-def prepare_dataset(dataset_directory, image_classes, validation_split):
+def prepare_dataset(dataset_directory, image_classes):
     """
     This funtion accepts the path to a directory, a dictionary mapping the names
     of the relevant folders in that directory to integer values, and a float [0-1]
-    representing the validation split for the data. It will return four arrays:
+    representing the validation split for the data. It will return two paralle arrays:
 
-    x_train: the images for training your model
-    y_train: the labels for these images, as integer values specified by the image_classes dictionary
-
-    x_validation: the images for validating your model
-    y_validation: the labels for these images, as integer values specified by the image_classes dictionary
+    data: the input data
+    labels: the classification labels.
     """
     images = []
     labels = []
@@ -124,13 +128,27 @@ def prepare_dataset(dataset_directory, image_classes, validation_split):
         
         print(f'Found {sub_dir_count} images of type {subdir}') # Note, blank line at the end of the for loop is a visual clue
 
+    return images, labels
 
+def validation_split(data, labels, validation_split):
+    """
+    This function takes two parallel arrays and a validation split (floating point)
+    and randomly samples the data and labels into a training and validation set
+    based on the provided split value. e.g. validation_slit = .2 means 20% of the 
+    data will be returned in the validation set. The function returns:
+
+    x_train: the images for training your model
+    y_train: the labels for these images, as integer values specified by the image_classes dictionary
+
+    x_validation: the images for validating your model
+    y_validation: the labels for these images, as integer values specified by the image_classes dictionary
+    """
     x_train = [] # Two empty lines between the end of the for loop is another visual clue.
     y_train = []
     x_validation = []
     y_validation = []
 
-    for image, label in zip(images, labels):
+    for image, label in zip(data, labels):
         if np.random.random() > validation_split:
             x_train.append(image)
             y_train.append(label)
@@ -150,6 +168,7 @@ def prepare_dataset(dataset_directory, image_classes, validation_split):
     print(f'Training size: {len(x_train)}, validation size: {len(x_validation)}')
 
     return x_train, y_train, x_validation, y_validation
+
 
 def load_maintain_aspect_ratio(input_image_path, target_size, color_channels):
     """

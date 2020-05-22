@@ -1,24 +1,28 @@
 # Write Cleaner Code
 
-This repository contains a selection of advice and examples of writing cleaner code. Entire books can, and have, been written on the subject (e.g. [Clean Code by Robert Martin](https://www.oreilly.com/library/view/clean-code/9780136083238/)). These materials are primarily intended to help run workshops and lessons on writing cleaner code. They serve as a brief, but helpful, reference for some of the most common bits of advice.
+This repository contains a selection of advice and examples for writing cleaner code. Entire books can, and have, been written on the subject (e.g. [Clean Code by Robert Martin](https://www.oreilly.com/library/view/clean-code/9780136083238/)). These materials are primarily intended to help run workshops and lessons on writing cleaner code. They serve as a brief, but helpful, reference for some of the most common bits of advice.
 
 This repo is also meant to facilitate better feedback among programmers. An editorial process like code review will help programmers write cleaner code. Engaging in code review exposes programmers to other styles and helps with better understanding likes and dislikes about different coding styles for finding your own.
 
 While the focus of this content is on Python, there are fundmental similarities between it and R that are critical to understand for any programmer. These fundamentals will be covered as an exercise in identifying the utility of these comparable languages, and why or where one may be preferably used over another. 
 
-## Using This Repo:
+## Using This Repository
 
 Although there is no explicit ordering to this content, when facilitating a workshop or working through these samples on your own, the following order is suggested:
 
 1. [General Advice](general-advice.md)
 1. [Giving and Receiving Feedback](giving-and-getting-feedback.md)
 1. [Examples](examples/) *note that while these are in Python, they apply to both languages
-    1. [Naming Variables](examples/variable-naming.py)
-    1. [Brevity vs Clarity](examples/brevity-vs-clarity-KISS.py)
-    1. [Don't Repeat Yourself](examples/DRY.py) or "DRY" vs "WET"
-    1. [Documentation and Comments](examples/documentation-comments.py)
-    1. [Code Structure and Logic](examples/structure.py)
+    1. [Naming Variables](examples/variable-naming.py), and [R equivalent](https://csgillespie.wordpress.com/2010/11/23/r-style-guide/)
+    1. [Brevity vs Clarity](examples/brevity-vs-clarity-KISS.py), and [R equivalent](http://stat405.had.co.nz/r-style.html)
+    1. [Don't Repeat Yourself](examples/DRY.py) or "DRY" vs "WET", see above link for R equivalent
+    1. [Documentation and Comments](examples/documentation-comments.py), and [R equivalent](https://swcarpentry.github.io/r-novice-inflammation/06-best-practices-R/)
+    1. [Code Structure and Logic](examples/structure.py), and [R equivalent](http://www2.stat.duke.edu/~cr173/Sta323_Sp16/R.html)
 1. [Helpful Tools and Resources For Clean Code and Review](helpful-tools.md)
+
+## See something that could be better organized, or perhaps is missing altogether?
+
+Submit an issue of the edit you'd like to see. 
 
 ## Copyright and Licensing
 
@@ -33,3 +37,6 @@ These materials were created by [Tyler Bettilyon](https://www.linkedin.com/in/ty
 Support the creation of more free, open source, public domain educational materials by sharing them with others, [subscribing to our newsletter](http://eepurl.com/dum8IP), becoming a subscriber on [Patreon](https://www.patreon.com/tebsLab), or [arranging a training from Teb's Lab](https://www.tebs-lab.com/contracting).
 
 You can additionally support the creation and maintenance of our free materials by using them -- View the [entire catalogue of free materials on the Teb's Lab website](https://www.tebs-lab.com/education).
+
+
+<img src="https://github.com/SuLab/TSRI-CBB/blob/master/Images/TebsLab-logo.png" width="35%"> <img src="https://github.com/SuLab/TSRI-CBB/blob/master/Images/scripps-logo.png" width="55%">

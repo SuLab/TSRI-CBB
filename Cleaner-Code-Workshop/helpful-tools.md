@@ -32,5 +32,3 @@ Many IDEs support automatic code formatting. Like a linter, these are often conf
 - [R Studio](https://rviews.rstudio.com/2016/12/02/writing-good-r-code-and-writing-well/)
 - [Software Carpentry](https://swcarpentry.github.io/r-novice-inflammation/06-best-practices-R/)
 - [R Bloggers](https://www.r-bloggers.com/writing-clean-and-readable-r-code-the-easy-way/)
-
-## 5. Group Input (May 15, 2020)
