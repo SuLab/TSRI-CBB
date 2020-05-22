@@ -1,0 +1,165 @@
+---
+title: "Intro R Markdown Basics"
+author: "R-users at SIO"
+date: "October 19, 2017"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 4
+  word_document:
+    toc: yes
+    toc_depth: '4'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+# Basics for R Markdown
+# This is a first level heading
+## This is a second level
+### third
+
+## Lists 
+
+We can make lists
+
+- one
+    - part a
+    - part b
+- two
+- three
+
+or
+
+* one
+    * part a
+
+And we can make numbered lists:
+
+1.  Numbered list item 1
+
+1.  Item 2. The numbers are incremented automatically in the output.
+
+## Formatting text
+
+> Blockquotes are a great way to make info stand out
+
+> - focus on me
+
+Italics for *emphasis* or _italics_
+
+Bold for **more emphasis** or __bold__
+
+## Equations
+
+We can include equations using LaTeX notation
+$\mu=A_{b}*\sigma^{x^{2}}$
+
+## Links and images
+
+<http://example.com>
+
+[linked phrase](http://example.com)
+
+![](C:/Users/Lynn/Pictures/sharkgiraffee.jpg)
+
+![optional caption text:sharks are fun](C:/Users/Lynn/Pictures/sharkgiraffee.jpg){ width=50% }
+
+## Tables
+
+### Basic Tables in R-markdown
+You can make tables just from R-markdown.
+
+First Header  | Second Header
+ ------------- | -------------
+ Content Cell  | Content Cell
+ Content Cell  | Content Cell
+
+### Tables in RMarkdown from R-chunks
+You must include the option `results='asis'` in the R-chunk in order to make tables.
+
+```{r}
+#install packages we need, if you haven't already
+#install.packages(c("knitr","xtable","stargazer"))
+```
+
+#### Tables using `kable`
+
+`kable` enables you to make tables from knitr 
+```{r kable, results = 'asis'}
+library(knitr)
+kable(head(mtcars), digits = 2, align = c(rep("l", 4), rep("c", 4), rep("r", 4)))
+```
+
+#### Tables using `xtable`
+
+Some people think you can make nicer tables with the `xtable` package. 
+```{r xtable, results = 'asis'}
+library(xtable)
+print(xtable(head(mtcars)), type = "html")
+```
+
+
+#### Tables using `stargazer`
+
+Yet another option, is the `stargazer` package.
+
+```{r star, results = 'asis', warning=FALSE, message=FALSE}
+library(stargazer, quietly = TRUE)
+
+fit1 <- lm(mpg ~ wt, mtcars)
+fit2 <- lm(mpg ~ wt + hp, mtcars)
+fit3 <- lm(mpg ~ wt + hp + disp, mtcars)
+
+stargazer(fit1, fit2, fit3, type="html")
+```
+
+## Figures
+
+In general, figures will appear in a knit document exactly as they would appear in the R session. There are several important figure options to be aware of.
+
+- `dev`, controls the graphics device used to create the figures. For example pdf, png, or jpeg. Check out tikzDevice if you are creating pdf output. The tikzDevice generates Latex code from R plots for use in Latex documents. That way, all fonts match the main text, and the Tex syntax for mathematics can be used directly in plots. Here are two examples of the power of tikzDevice: http://bit.ly/114GNdP, example
+- `path` what directory to save the figures.
+- `fig_width`, `fig_height`, in inches. Can also be set globally.
+- `fig_align`, left, right or center.
+
+## Getting help in R-markdown
+R Markdown integrates a number of R packages and external tools. This means that help is, by-and-large, not available through `?`. Instead, as you work through this chapter, and use R Markdown in the future, keep these resources close to hand:
+
+- R Markdown Cheat Sheet: *Help > Cheatsheets > R Markdown Cheat Sheet*,
+
+- R Markdown Reference Guide: *Help > Cheatsheets > R Markdown Reference Guide*.
+
+Both cheatsheets are also available at http://rstudio.com/cheatsheets.
+
+## Additional resources
+[1] <http://r4ds.had.co.nz/r-markdown.html>
+
+[2] <https://onlinecourses.science.psu.edu/statprogram/markdown>
+
+[3] <https://sachsmc.github.io/knit-git-markr-guide/knitr/knit.html>
+
+[4] <https://dereksonderegger.github.io/570L/16-rmarkdown-tricks.html>
+
+[5] <https://sebastiansauer.github.io/figure_sizing_knitr/>
