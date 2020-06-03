@@ -6,6 +6,8 @@ This repo is also meant to facilitate better feedback among programmers. An edit
 
 While the focus of this content is on Python, there are fundmental similarities between it and R that are critical to understand for any programmer. These fundamentals will be covered as an exercise in identifying the utility of these comparable languages, and why or where one may be preferably used over another. 
 
+The recording for the workshop paired with this repository (held on May 15, 2020), along with additional materials, can be found [here](https://scrippsresearch.instructure.com/courses/316/modules). 
+
 ## Using This Repository
 
 Although there is no explicit ordering to this content, when facilitating a workshop or working through these samples on your own, the following order is suggested:
