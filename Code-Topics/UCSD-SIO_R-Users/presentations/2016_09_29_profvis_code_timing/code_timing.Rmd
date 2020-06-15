@@ -1,0 +1,144 @@
+---
+title: "How fast is R?"
+author: "Hao Ye"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+css: styles.css
+output:
+  html_document:
+    toc: false
+    number_sections: true
+---
+
+# Everything I learned in Algorithms Class is Useless
+
+- Datasets can be large, but rarely "humongous"
+- R code is often run just a few times or even once
+- Computer time matters, but human time (sometimes even grad students!) usually matters more
+- R is usually "fast enough" (if you make an effort to use built-in functions instead of loops)
+
+# Simple Ways to Time Your Code
+
+## Setup
+
+```{r slowish example, cache = TRUE}
+
+# make some data (note data.frame type)
+data <- as.data.frame(
+    matrix(rnorm(400000 * 150, mean = 5), ncol = 15)
+)
+
+# define a function to normalize the columns to be mean 0
+normCols <- function(d) {
+    means <- apply(d, 2, mean) # compute means over each column
+    
+    for(i in seq_along(means)) {
+        d[, i] <- d[, i] - means[i]
+    }
+    
+    # to not have to deal with the output, we return nothing, though normally, 
+    # we would return the object d
+    return()
+}
+```
+
+## system.time()
+
+Just wrap your code or function calls in system.time.
+
+```{r using system.time, cache = TRUE}
+system.time(normCols(data))
+```
+
+## proc.time
+
+Alternatively, you can get more manual control using \code{proc.time()}, which returns the amount of time the currently running R process has already taken.
+
+```{r using proc.time, cache = TRUE}
+start_time <- proc.time() # record when we started our code
+
+normCols(data)
+
+print(proc.time() - start_time) # output elapsed difference
+```
+
+## proc.time (advanced)
+
+```{r using proc.time ii, cache = TRUE}
+start_time <- proc.time()
+
+normCols(data)
+
+message("Elapsed time was ", (proc.time() - start_time)[3], " seconds.")
+```
+
+## profvis
+
+Using the "profvis" package, we can have a nice visualization of the output from the built-in R profiler:
+
+```{r using profvis, cache = TRUE}
+library(profvis)
+
+profvis(normCols(data))
+```
+
+If we include the function definition, the display will even track down the elapsed time to individual lines of code. Note that we wrap our code block in curly braces, {}.
+
+```{r using profvis ii, cache = TRUE}
+profvis({
+    normCols <- function(d) {
+        means <- apply(d, 2, mean) # compute means over each column
+        
+        for(i in seq_along(means)) {
+            d[, i] <- d[, i] - means[i]
+        }
+        
+        # to not have to deal with the output, we return nothing, though normally, 
+        # we would return the object d
+        return()
+    }
+    normCols(data)
+})
+```
+
+Since most of the time was used in the apply function, let's try a couple different versions to do the same calculation.
+
+```{r using profvis iii, cache = TRUE}
+library(Rcpp)
+
+profvis({
+    # means <- apply(data, 2, mean)
+    means <- colMeans(data)
+    means <- lapply(data, mean)
+    means <- vapply(data, mean, numeric(1))
+    
+    # means <- lapply(data, function(v) {
+    #     total <- 0
+    #     for(i in seq_along(v)) {total <- total + v[i]}
+    #     return(total / length(v))
+    # })
+    
+    means <- lapply(data, function(v) {
+        return(sum(v) / length(v))
+    })
+    
+    cppFunction( "double cpp_sum(const NumericVector v) {
+                 double total = 0;
+                 for(size_t i = 0; i < v.size(); ++i) {total += v[i];}
+                 return(total);
+                 }")
+    
+    means <- lapply(data, function(v) {
+        total <- cpp_sum(v)
+        return(total / length(v))
+    })
+})
+
+library(plyr)
+
+means <- ddply(data, mean)
+
+```
+
+# Links
+- [More info on profvis](rstudio.github.io/profvis)
+

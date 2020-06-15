@@ -1,0 +1,44 @@
+Recurring Zoom: ,https://scrippsresearch.zoom.us/j/95689931841,,,,,,
+"Previous Documents: 
+",https://drive.google.com/drive/folders/1GMkAlUTVry9BXd3pdl5LydqMz5l2HDbx?usp=sharing,,,,,,
+,,,,,,,
+Date,Time (PST),Location,Presenting,Topic,Questions,Resources,Present
+Dec 11 (Wed),3 - 4 PM,Beckman floor 4 Tables,Not Applicable,Organizational Meeting,,,"Jerry, Marcela, Nava, Sabah"
+Dec 19 (Thu),2 - 3 PM ,"Beckman SR402D
+",Jerry,Object-oriented Programming in R (principles and examples),,https://adv-r.hadley.nz/,"Jerry, Nava, Sabah"
+Feb 14 (Fri),12 - 1 PM ,"Beckman SR402D
+",Sabah,"lm() from input to output interpretation 
+","plot(lm()): Residuals vs Leverage, Residuals vs Fitting, Scale-Location
+",https://www.pitt.edu/~njc23/Lecture10.pdf,"Sabah, Marcela, Nava, Yuren, Jerry"
+Apr 3 (Fri),12 - 1 PM,Zoom,Group,"lm() continued, and glm()
+",,https://noamross.github.io/gams-in-r-course/,"Sabah, Nava, Yuren, Jerry, Bence, Eddie"
+May 1 (Fri),12 - 1 PM,Zoom,Group,"Completed Ch I, walk through Ch II togehter",,https://noamross.github.io/gams-in-r-course/,
+May 15 (Fri),12 - 1 PM,Zoom,,,,,
+,,,,,,,
+,,,,Base R statistics (fine line of statistical power - when to use/when not feasible for in silico vs experiment),,,
+,,,,"p-values vs accuracy metrics, and theory",,,
+,,,,"Null models, training data, and testing hypotheses",,,
+,,,,Machine learning: Methods and application,,,
+,,,,Understanding source code in R (ie limma package),,,
+,,,,"scRNASeq, advanced RNAseq analysis: Alternative splicing, variant calling, separating covariates",,,
+,,,,"Walk-through of someone's code, and troubleshooting/debugging (rotational)
+",,,
+,,,,,,,
+Resources,,,,,,,
+https://noamross.github.io/gams-in-r-course/,,,,,,,
+https://ocw.mit.edu/courses/biology/7-91j-foundations-of-computational-and-systems-biology-spring-2014/video-lectures/,,,,,,,
+https://swcarpentry.github.io/r-novice-gapminder/,,,,,,,
+https://github.com/SuLab/Applied-Bioinformatics,,,,,,,
+https://mc-stan.org/users/documentation/tutorials,,,,,,,
+https://github.com/stan-dev/bayesplot,,,,,,,
+https://visit.figure-eight.com/Essential-Guide-to-TD-for-ML-eBook_Reg-LP-2018.html?source=Paid&medium=DSC,,,,,,,
+http://reliawiki.org/index.php/Simple_Linear_Regression_Analysis,,,,,,,
+,,,,,,,
+UCSD-SIO R Users: https://siomail.ucsd.edu/mailman/listinfo/r-users ,,,,,,,
+Date,Time ,Location,Presenting,Topic,,,
+Jan 22 (Wed),3 - 4 PM PST,SIO Eckart 236,Kayla Blincow,Top 10 Tips and Tricks in R,,,
+Jan 29 (Wed),3 - 4 PM PST,SIO Eckart 236,Natalya Gallo,GAMs,,,
+Feb 5 (Wed),3 - 4 PM PST,SIO Eckart 236,Jooil Kim,Self-Organizing Maps,,,
+Feb 19 (Wed),3 - 4 PM PST,SIO Eckart 236,Sabah Ul-Hasan,https://sabahzero.github.io/dataviz/,,,
+Feb 26 (Wed),3 - 4 PM PST,SIO Eckart 236,Eric Archer,Random Forests,,,
+Mar 4 (Wed),3 - 4 PM PST,SIO Eckart 236,Jimjohn Milan,PCAs,,,

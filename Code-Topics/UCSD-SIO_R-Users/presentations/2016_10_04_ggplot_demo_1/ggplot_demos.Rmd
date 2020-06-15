@@ -1,0 +1,102 @@
+---
+title: "ggplot2 examples"
+author: "Hao Ye"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+css: styles.css
+output:
+  html_document:
+    toc: false
+    number_sections: true
+---
+
+```{r setup, include = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+# Basic ggplot syntax
+
+The `ggplot2` package operates by building a plot in layers, corresponding to different aspects of a plot. This modular approach makes it simple to flexibly modify aspects of a plot, but with a steeper learning curve for starting out.
+
+First, let's load the package and some sample data.
+```{r ggplot setup}
+library(ggplot2)
+data(diamonds)
+```
+
+Now, let's create a simple ggplot object and define several layers. I recommend using the standard `ggplot` function rather than `qplot` to take advantage of the modular properties of using ggplot.
+
+```{r simple data and mapping}
+p <- ggplot(data = diamonds, 
+            mapping = aes(x = carat, 
+                          y = price, 
+                          color = cut))
+summary(p)
+```
+
+Our object `p` now includes the data, and a mapping that describes the x-variable, the y-variable, and the variable that will specify the color.
+
+# Some sample plot types
+
+```{r scatterplot}
+p + geom_point()
+```
+
+```{r lineplot}
+p + geom_line()
+```
+
+```{r boxplot}
+p + geom_boxplot()
+```
+
+```{r 2d histogram}
+p + stat_bin2d()
+```
+
+```{r 2d hexplot}
+p + geom_hex()
+```
+
+# Modifying attributes
+
+We can of course modify various aspects of the plots.
+
+```{r scatterplot ii}
+p + geom_point() + 
+    xlab("Size (carat)") + 
+    ylab("Price (USD?)") +
+    coord_cartesian(xlim = c(0, 3), ylim = c(0, 10000))
+```
+
+```{r scatterplot iii}
+p + geom_point() + 
+        coord_flip() + 
+        scale_color_manual(values = rainbow(5))
+```
+
+```{r scatterplot iiii}
+p + geom_point() + 
+        facet_grid(clarity ~ .) + 
+        theme(panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.text = element_text(color = "black"), 
+              panel.background = element_rect(color = "black", fill = NA))
+```
+
+
+# More complex plots
+
+The modular nature also makes it straightforward to combine multiple types of plots or to add features. For example, there are several built-in functions to do common summarizations:
+
+```{r scatter with loess regression}
+p + geom_point() + geom_smooth(method = "loess")
+```
+
+Of course, it is also possible to plot your own analyses:
+```{r scatter with custom predictions}
+demo_model <- glm(price ~ carat * cut, data = diamonds)
+sample_df <- diamonds[sample(1:NROW(diamonds), 1000), c("cut", "carat")]
+sample_df$price <- predict(demo_model, sample_df)
+p + geom_point() + geom_line(data = sample_df, size = 2)
+```
+

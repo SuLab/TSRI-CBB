@@ -1,0 +1,6 @@
+source("/var/folders/zf/w0dsd0yn3d7czjqv5rbj9xph0000gn/T//Rtmpow2O0C/file25943892648d")#
+unlink("/var/folders/zf/w0dsd0yn3d7czjqv5rbj9xph0000gn/T//Rtmpow2O0C/file25943892648d")
+source("/Users/hye/Desktop/rcpp_basics/rcpp_demo.R")
+microbenchmark(cpp_fib(20), R_fib(20))
+cpp_fib(1:2)
+sapply(1:20, cpp_fib)
