@@ -41,4 +41,4 @@ Support the creation of more free, open source, public domain educational materi
 You can additionally support the creation and maintenance of our free materials by using them -- View the [entire catalogue of free materials on the Teb's Lab website](https://www.tebs-lab.com/education).
 
 
-<img src="https://github.com/SuLab/TSRI-CBB/blob/master/Images/TebsLab-logo.png" width="35%"> <img src="https://github.com/SuLab/TSRI-CBB/blob/master/Images/scripps-logo.png" width="55%">
+<img src="https://github.com/SuLab/TSRI-CBB/blob/main/Images/TebsLab-logo.png" width="35%"> <img src="https://github.com/SuLab/TSRI-CBB/blob/main/Images/scripps-logo.png" width="55%">
