@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/SuLab/TSRI-CBB/main/Images/CBB-logo.png" width="30%">
 </p>
 
-# The CBB Affinity Group at Scripps Research (California, Florida)
+# The CBB Affinity Group at Scripps Research (CA and FL)
 This is the Github repository for the Computational Biology and Bioinformatics (CBB) community and affiliated [core track for graduate students](https://education.scripps.edu/graduate/doctoral-program/customizable-curriculum/stbio400-440.html) at Scripps Research, serving nearly 300 researchers and enthusiasts in the greater San Diego area.<br>Learn more via [our website](http://viperdb.scripps.edu/cbb/#home)
 <br><br>
 *Our Mission:* We are four postdoctoral scholars across disciplines (2019 to present: [Dr Jerry Zak](https://github.com/trebbiano) and [Dr Sabah Ul-Hasan](https://github.com/sabahzero), 2020 to present: [Dr. Daniel Montiel Garcia](https://github.com/viperdb) and [Dr Haissi Cui](https://github.com/Haissi)) who work together to (i) provide relevant seminars and workshops catered to community needs, (ii) host code reviews and discussions, and (iii) supply a platform both on- and off- line for Scripps Research employees and affiliates to connect with one another surrounding all topics CBB. We are an open, inclusive organization that adheres to [FAIR practices](https://www.go-fair.org/fair-principles/). All suggestions, questions, and comments are welcome at sulhasan[at]scripps.edu.
