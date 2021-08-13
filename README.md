@@ -18,8 +18,7 @@ This is the Github repository for the Computational Biology and Bioinformatics (
 - Website: Dr. Montiel Garcia and Dr. Ul-Hasan
 
 Below is a brief description of each folder in this repositiory, and how it serves as a resource. 
-
-
+update
 # CBB Metadata
 This is an overview of current topics of interest for CBB, based on introductory information.
 
