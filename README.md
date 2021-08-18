@@ -25,7 +25,7 @@ This is an overview of current topics of interest for CBB, based on introductory
 ## Code Topics 
 These are files between the Scripps Research Institute Specialized Code Topics in R or Python (every other Friday @ 12 - 1 PM PST) and Scripps Institution of Oceanography [R-Users group](https://github.com/Open-Data-Science-at-SIO/R-Users-Presentations).
 
-### R-users listserv
+### R-users listserv -- status?
 https://siomail.ucsd.edu/mailman/listinfo/r-users
 
 ## Research in Progress
