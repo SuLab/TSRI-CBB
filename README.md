@@ -34,6 +34,6 @@ These are presentations for lab meeting-like seminars that occur monthly on all 
 ## Workshops
 These are focused, one-off workshops in collaboration with [TEB Labs](https://github.com/Tebs-Lab).
 
-# Slack Channel
+# Slack Channel -- dormant
 This is our Slack channel for ongoing communication
 https://join.slack.com/share/zt-h725ukp1-CM2BI~Z3Q362iOxKXBYkgA
