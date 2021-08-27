@@ -1,11 +1,11 @@
 ---
-title: "CBB-Metadata_Sep8-2020"
+title: "CBB-Metadata_Aug27-2021"
 author: "Sabah Ul-Hasan"
 output: pdf_document
 ---
                 Lines
-Packages        13-53
-Data            55-60
+Packages        13-50
+Data            52-
 Piechart        62-86
 Wordcloud       88-102
 Barchart        104-129
@@ -19,28 +19,25 @@ Install Relevant Packages, Load Libraries
 
 ## Need package for downloading data directly from Github
 ### install.packages("RCurl") 
-### packageVersion("RCurl") # v1.98.1.2 
+### packageVersion("RCurl") # v1.98.1.4
 
 ## Need package for data clean-up (pipes)
 ### install.packages("dplyr") 
-### packageVersion("dplyr") # v1.0.2
-
+### packageVersion("dplyr") # v1.0.7
 
 ## Need package to create word clouds
-### install.packages("devtools") # Need for using 'install_github'
-### packageVersion("devtools") # v2.3.1
+###  install.packages("devtools") # Need for using 'install_github'
+### packageVersion("devtools") # v2.4.2
 ### install_github("lchiffon/wordcloud2")
 ### packageVersion("wordcloud2") # v0.2.2
 
 ## Need package for visualization of data 
 ### install.packages("ggplot2") 
-### packageVersion("ggplot2") # v3.3.2
+### packageVersion("ggplot2") # v3.3.5
 
 ## Need package to compile images as a unified figure
 ### install.packages("cowplot")
-### packageVersion("cowplot") # v1.1.0
-
-
+### packageVersion("cowplot") # v1.1.1
 
 # Load libraries directly, if packages previously installed 
 library(RCurl)
