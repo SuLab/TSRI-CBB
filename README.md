@@ -27,13 +27,13 @@ Below is a brief description of each folder in this repository, and how it serve
 ## CBB Metadata
 This is an overview of current topics of interest for CBB, based on introductory information in our metadata Google spreadsheet that CBB members population voluntarily (about ~30% contribute rate).
 
-## Code Topics 
+## Code Topics (see README in folder)
 These are files between the Scripps Research Institute Specialized Code Topics in R or Python and Scripps Institution of Oceanography [R-Users group](https://github.com/Open-Data-Science-at-SIO/R-Users-Presentations).
 
-## Research in Progress
+## Research in Progress (see README in folder)
 These are presentations for lab meeting-like seminars that occur monthly on all topics bioinformatics. Previous speakers can be contacted directly for a recording of their seminar.
 
-## Workshops
+## Workshops (see README in folder)
 These are focused, one-off workshops. Some of which have been in collaboration with [TEB Labs](https://github.com/Tebs-Lab).
 
 # Input
