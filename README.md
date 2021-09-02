@@ -28,7 +28,7 @@ Below is a brief description of each folder in this repository, and how it serve
 This is an overview of current topics of interest for CBB, based on introductory information in our metadata Google spreadsheet that CBB members population voluntarily (about ~30% contribute rate). Access to the active Google spreadsheet requires being part of the listserv (contact sulhasan[at]scripps.edu).
 
 ## [Monthly Seminars](https://github.com/SuLab/TSRI-CBB/tree/main/Seminars-Monthly) 
-Also referred to as 'Research in Progress', these are presentations for lab meeting-like seminars that occur about once a month on all topics bioinformatics. Previous speakers can be contacted directly for a recording of their seminar. We are intentional in our speaker selection being representative across demographics, career stages, and topics.=
+Also referred to as 'Research in Progress', these presentations for lab meeting-like seminars occur about once a month on all topics bioinformatics. Previous speakers can be contacted directly for a recording of their seminar. We are intentional in our speaker selection being representative across demographics, career stages, and topics.
 
 ## [Coding Workshops and General Discussions](https://github.com/SuLab/TSRI-CBB/tree/main/Coding-WorkshopsEtc) 
 These are focused coding (R and/or Python) workshops and events. Some have occurred as bi-weekly events, one-offs, or in collaboration with [TEB Labs](https://github.com/Tebs-Lab). We additionally link to the Scripps Institution of Oceanography [R-Users group](https://github.com/Open-Data-Science-at-SIO/R-Users-Presentations) as another resource.
