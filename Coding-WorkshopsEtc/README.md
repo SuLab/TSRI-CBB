@@ -5,13 +5,12 @@ More recordings and slides are available [here](https://drive.google.com/drive/f
 
 | Date | Lead | Topic |
 | ---- | ---- | ----- |
-| Dec 11 2019 | Content Cell  | Content Cell  |
-| Dec 19 2019 | Content Cell  | Content Cell  |
-| Feb 14 2020 | Content Cell  | Content Cell  |
-| Apr 03 2020 | Content Cell  | Content Cell  |
-| May 01 2020 | Content Cell  | Content Cell  |
-| May 22 2020 | Content Cell  | Content Cell  |
-| Jul 17 2020 | Content Cell  | Content Cell  |
-| Aug 21 2020 | Content Cell  | Content Cell  |
-| Sep 25 2020 | Content Cell  | Content Cell  |
-| May 19 2021 | Content Cell  | Content Cell  |
+| Dec 19 2019 | Jerry Zak  | Content Cell  |
+| Feb 14 2020 | Sabah Ul-Hasan | Content Cell  |
+| Apr 03 2020 | Group | Content Cell  |
+| May 01 2020 | Sabah Ul-Hasan | Content Cell  |
+| May 22 2020 | Dan Munro | Content Cell  |
+| Jul 17 2020 | Shang-Fu Chen | Content Cell  |
+| Aug 21 2020 | Hao Ye | Content Cell  |
+| Sep 25 2020 | Haissi Cui | Content Cell  |
+| May 19 2021 | Daniel Montiel Garcia and Haissi Cui  | Content Cell  |
