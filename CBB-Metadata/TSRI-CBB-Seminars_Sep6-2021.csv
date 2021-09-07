@@ -1,0 +1,16 @@
+Date,Room,Host,Attendance,"Group(s)/Host(s)
+",Topic,Keywords
+Feb 12 2020,"CA:CLH (confirmed), FL: B158 (confirmed)",Jerry Zak,23,Sidd Sharma (Teyton Lab),Integrating Single-cell Techniques into Translational Immunology,autoimmunity human-pbmc lymphocytes sc-rnaqseq qpcr tsne umap
+Apr 22 2020,Zoom (1-2 PST),Jerry Zak,23,Adrian Reich (FL Core Facilities),Developing Sequence Analysis Pipelines for Cores,chipseq garibaldi pipeline reproducibility rnaseq
+Jul 22 2020,Zoom (12-1 PST),Jerry Zak,13,Nava Ehsan (Mohammadi Lab),Estimating the Effect Sizes for Independent eQTLs,allele-expression afc eqtl gene-expression regulatory-variation
+Aug 26 2020,Zoom (12-1 PST),Jerry Zak,15,Daniel Jorge Montiel Garcia (Reddy Lab),VIPERdb,icosahedral machine-learning phylogenetics viperdb virus 
+Nov 11 2020,Zoom (12-1 PST),Jerry Zak,23,Julia Marie Grandjean (Wiseman Lab),Visualizing RNA-seq data for drug discovery,rnaseq high-throughput stress-signaling
+Jan 29 2021,Zoom (12-1 PST),Haissi Cui,20,"Cradle Genomics: Vu Ngo, Sorena Rahmanian, Josh Shapiro ",Careers in Bioinformatics,
+Feb 26 2021,Zoom (12-1 PST),Jerry Zak,22,Chao Wang (Balch Lab),Gaussian process determines structural evolution of SARS-CoV-2 RNA Dependent RNA polymerase (RdRp) in human population’,coronavirus sars-cov2 remdesivir 
+Mar 24 2021,Zoom (12-1 PST),Jerry Zak,23,Eddie Grinman (Puthanveettil Lab),Integrating RNA databases and datasets to study learning-dependentmRNA/miRNA/lncRNA regulatory networks,structural-stability gaussian machine-learning evolution
+May 26 2021,Zoom (12-1 PST),Jerry Zak,26,Mark Zeller (Andersen Lab),Tracking the COVID-19 pandemic using genomic epidemiology,sars-cov2 epidemiology phylogenetics virus 
+Jun 23 2021,Zoom (12-1 PST),Jerry Zak,16,Casimir Bamberger (Yates Lab),"pCtSEA, a bioinformatics tool for proteomic cell type set enrichment analysis",proteomics sars-cov2 interactome tropism
+Jul 21 2021,Zoom (12-1 PST),Haissi Cui,36,Encodia: Devin Sullivan,Careers in Bioinformatics,
+Aug 4 2021,Zoom (12-1 PST),Jerry Zak,28,Raquel Dias (Torkamani Lab),Accurate and Reference-Free Genotype Imputation with Denoising Autoencoders ,"deep-learning genomics imputation
+artificial intelligence, neural networks"
+Aug 25 2021,Zoom (12-1 PST),Haissi Cui,15,Huitian Diao  (Pipkin Lab),Single-cell lineage trajectories and chromatin regulators that compose antiviral CD8 T cell ontogeny,sc-rnaqseq virus ngs t-cell immune-response
