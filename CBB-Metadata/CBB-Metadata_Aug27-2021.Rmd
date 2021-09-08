@@ -5,10 +5,10 @@ output: pdf_document
 ---
                 Lines
 Packages        13-50
-Data            52-
-Piechart        62-86
-Wordcloud       88-102
-Barchart        104-129
+Data            52-147
+  Piechart        61
+  Wordclouds      87
+  Barchart        119
 
 Install Relevant Packages, Load Libraries 
 ```{r}
@@ -56,6 +56,8 @@ Visualizations
 df <- read.csv(text=getURL("https://raw.githubusercontent.com/SuLab/TSRI-CBB/main/CBB-Metadata/TSRI-CBB-Metadata_LastUpdated-Aug27-2021.csv")) 
 summary(df) # Quick view of data
 
+seminars <- read.csv(text=getURL("https://raw.githubusercontent.com/SuLab/TSRI-CBB/main/CBB-Metadata/TSRI-CBB-Seminars_Sep6-2021.csv"))
+
 # Who is part of CBB?
 # Pie chart of 'Position' column (n = 117)
 ## Pipe for data table of position vs frequency
@@ -95,6 +97,22 @@ wc <- df$Topics %>%
   data.frame()
 ## Create figure 
 png("CBB-Topics_wordcloud_Aug27-2021.png")
+wordcloud2(wc, size=0.7, color="random-light", backgroundColor="black", shape = "circle") # adjust font size to ensure words fit
+dev.off()
+
+# What are the main seminar keywords of CBB?
+# Word cloud of 'Topics' column
+## Pipe for data table of word vs frequency
+wc <- seminars$Keywords %>% 
+  na.omit() %>% 
+  as.character() %>% 
+  strsplit(" ") %>% 
+  unlist() %>% 
+  table() %>% 
+  sort(decreasing = TRUE) %>% 
+  data.frame()
+## Create figure 
+png("CBB-Seminars_wordcloud_Sep7-2021.png")
 wordcloud2(wc, size=0.7, color="random-light", backgroundColor="black", shape = "circle") # adjust font size to ensure words fit
 dev.off()
 
