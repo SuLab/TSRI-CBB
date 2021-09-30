@@ -1,1 +1,1 @@
-placeholder
+In this folder is the raw metadata from Scripps CBB users (.csv), R script for analysis (.Rmd), and output figures from said analysis for keeping track of CBB usage and relevance over time.
