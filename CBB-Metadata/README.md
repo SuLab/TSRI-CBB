@@ -1,1 +1,3 @@
-In this folder is the raw metadata from Scripps CBB users (.csv), R script for analysis (.Rmd), and output figures from said analysis for keeping track of CBB usage and relevance over time.
+In this folder is the raw metadata from Scripps CBB users and seminar info (.csv), R script for analysis (.Rmd), and output figures from said analysis for keeping track of CBB usage and relevance over time.
+<br><br>
+April 28, 2020 represents the first .csv used for metadata analysis. Subsequent .csv files are located in the Members_Sep8-2020 folder and in the Members_Aug27-2021 folder. Seminars metadata is a recent addition, viewed in the Seminars_Sep2021 folder.
