@@ -5,17 +5,16 @@
 # Scripps Research CBB (CA and FL)
 This is the Github repository for the Computational Biology and Bioinformatics (CBB) community at Scripps Research, affiliated with the [core track for graduate students](https://education.scripps.edu/graduate/doctoral-program/customizable-curriculum/stbio400-440.html), with the intention of providing TSRI and the larger San Diego bioinformatics community a collaborative network and relevant events. We serve ~300 researchers and enthusiasts.
 <br><br>
-*Our Mission:* We are four postdoctoral scholars across disciplines (2019 to present: Seminar Co-Coordinator [Dr Jerry Zak](https://github.com/trebbiano) and Programming Coordinator [Dr Sabah Ul-Hasan](https://github.com/sabahzero), 2020 to present: Platform Developer [Dr. Daniel Montiel Garcia](https://github.com/viperdb) and Seminar Co-Coordinator [Dr Haissi Cui](https://github.com/Haissi)) working together to (i) provide relevant seminars and workshops catered to community needs, (ii) host code reviews and discussions, and (iii) supply a platform both on- and off- line for Scripps Research employees and affiliates to connect with one another surrounding all topics CBB. We are an open, inclusive organization that adheres to [FAIR practices](https://www.go-fair.org/fair-principles/). Learn and explore more via [our website](http://viperdb.scripps.edu/cbb/#home). All suggestions, questions, and comments are welcome at sulhasan[at]scripps.edu.
+*Our Mission:* We are three Scripps Research academic trainees across disciplines (Seminar Co-Coordinator [Dr Jerry Zak](https://github.com/trebbiano), Programming Coordinator [Dr Daniele Parisi](), and Seminar Co-Coordinator [Ian Newman](https://github.com/codingcane)) working together to (i) provide relevant seminars and workshops catered to community needs, (ii) host code reviews and discussions, and (iii) supply a platform both on- and off- line for Scripps Research employees and affiliates to connect with one another surrounding all topics CBB. We are an open, inclusive organization that adheres to [FAIR practices](https://www.go-fair.org/fair-principles/). Learn and explore more via [our website](http://viperdb.scripps.edu/cbb/#home). All suggestions, questions, and comments are welcome at jaroslav[at]scripps.edu.
 <br><br>
 *Roles:* If any of the following leadership roles appeal to you, and/or if there is another you can devise, feel free to contact us.
-- Career Events: Dr. Cui
-- Code Topics and Workshops: Dr. Cui and Dr. Montiel Garcia 
-- Diversity, Equity, Inclusion and Accessbility: Everyone, including members 
-- Github Updates: Dr. Ul-Hasan
-- Monthly Seminars: Dr. Cui and Dr. Zak
-- Quarterly Newsletters: Dr. Ul-Hasan
-- Recruitment and Circulation: Dr. Ul-Hasan
-- Website: Dr. Montiel Garcia and Dr. Ul-Hasan
+- Career Events: Ian Newman
+- Code Topics and Workshops: Dr. Parisi
+- Diversity, Equity, Inclusion and Accessbility: Everyone, including members
+- Github Updates: Ian Newman
+- Monthly Seminars: Dr. Zak
+- Recruitment and Circulation: 
+- Website: 
 
 *Relevant Resources*<br>
 - Bi-annual [Applied Bioinformatics course](https://github.com/SuLab/Applied-Bioinformatics) (for previous recordings, contact the [Graduate Office](https://education.scripps.edu/about/contact/))
