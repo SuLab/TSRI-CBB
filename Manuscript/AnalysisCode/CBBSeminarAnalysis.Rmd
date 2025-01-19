@@ -1,0 +1,120 @@
+---
+title: "CBBManuScriptAnalysis"
+author: "Ian Newman"
+date: "2023-12-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# CBB Seminar Analysis for Manuscript
+
+## Setting up environment
+
+```{r}
+library(magrittr)
+library(zoo)
+library(dplyr)
+library(scCustomize)
+library(stringr)
+```
+
+
+
+
+## Seminar Attendance
+
+```{r}
+cbb_seminars <- read.csv(file = "CBB_seminars_list.csv")  ## Reading in seminar data
+
+## Converts dates into numeric year-based representations
+numericDate <- function(day, month, year){
+  year <- year
+  month <- (month-1)/12
+  day <- 1/365 * day
+  year + month + day
+}
+## Adding numeric date for each seminar
+cbb_seminars$numericDate <- c(numericDate(12,2,2020),
+                    numericDate(22,4,2020),
+                    numericDate(22,7,2020),
+                    numericDate(26,8,2020),
+                    numericDate(11,11,2020),
+                    numericDate(26,2,2021),
+                    numericDate(24,3,2021),
+                    numericDate(26,5,2021),
+                    numericDate(23,6,2021),
+                    numericDate(4,8,2021),
+                    numericDate(25,8,2021),
+                    numericDate(19,10,2021),
+                    numericDate(17,11,2021),
+                    numericDate(25,1,2022),
+                    numericDate(16,2,2022),
+                    numericDate(16,3,2022),
+                    numericDate(30,3,2022),
+                    numericDate(13,4,2022),
+                    numericDate(27,7,2022),
+                    numericDate(18,8,2022),
+                    numericDate(15,9,2022),
+                    numericDate(19,10,2022),
+                    numericDate(17,11,2022),
+                    numericDate(08,12,2022),
+                    numericDate(22,3,2023),
+                    numericDate(25,4,2023),
+                    numericDate(23,5,2023),
+                    numericDate(16,6,2023),
+                    numericDate(14,7,2023),
+                    numericDate(23,8,2023),
+                    numericDate(31,10,2023),
+                    numericDate(21,11,2023)
+                    )
+cbb_seminars %<>% na.omit()  ## Removing two seminars without attendance information
+
+## Creating a rolling average attendance
+cbb_seminars$Attend_RA <- zoo::rollmean(cbb_seminars$Attendance, k=6, fill=NA, align='right')
+
+## Figure 4: Plotting rolling average attendance overlaid on attendance
+matplot(x = cbb_seminars$numericDate, y = cbind(cbb_seminars$Attendance, cbb_seminars$Attend_RA), type = "l", lty = 1, lwd = 4, xlab = "Seminar Date", ylab = "Attendees", main = "Scripps CBB seminar attendance", ylim = c(0,40))
+legend("topleft", legend = c("Attendance", "6mo rolling attendance"), 
+       col = c("black", "red"), 
+       lty = 1)
+```
+
+
+
+
+## Seminar topics
+
+```{r}
+## Figure 3 right: Plotting seminars by department affiliation
+fieldFreq <- data.frame(Fields = c("Immunology & Microbiology", "Structural Biology", "Computational Biology", "Molecular Biology", "Neuroscience", "Core Services"),
+                        Frequency = c(4, 8, 19, 7, 7, 2))
+colors6 <- scCustomize::DiscretePalette_scCustomize(num_colors = 6, palette = "varibow", shuffle_pal = TRUE)  ## Preparing color palette
+
+barplot(fieldFreq$Frequency, xaxt = "n", col = colors6,
+        ylab = "CBB Seminars", ylim = c(0, 20), main = "CBB Seminar by Department Affiliation")
+legend(x = "topright", legend= fieldFreq$Fields,
+       cex = 1.3, fill = colors6)
+
+
+
+## Figure 3 left: Plotting seminars by topic
+kw <- cbb_seminars.df %>% pull(Controlled_Keywords) %>%
+  strsplit(", ") %>%  ## Separating cases where multiple keywords are associated with a single seminar
+  unlist() %>%
+  table() %>%
+  data.frame() %>%
+  .[{rev(order(.$Freq))},] %>%  ## Ordering resulting frequency table
+  dplyr::rename("keyword" = ".") %>%
+  mutate(keyword = stringr::str_to_title(keyword))
+kw$keyword <- replace(x = kw$keyword, list = c(2,7,10), values = c("Machine Learning", "HPC", "Dim. Reduction"))  ## Replacing keyword names for these entries
+colors8 <- scCustomize::DiscretePalette_scCustomize(num_colors = 8, palette = "varibow", shuffle_pal = TRUE)
+
+## Using only keywords with frequency >2.
+barplot(kw[-c(9:13),]$Freq, col = colors8,
+        ylab = "CBB Seminars", ylim = c(0, 14), main = "CBB Seminar Topics") 
+legend(x = "topright", inset = .02, legend =  kw[-c(9:13),]$keyword,
+       cex = 1.3, fill = colors8)
+```
