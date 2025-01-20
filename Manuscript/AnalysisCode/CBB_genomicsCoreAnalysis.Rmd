@@ -1,0 +1,268 @@
+---
+title: "CBB_GenomicsCoreAnalysis"
+author: "Jerry Zak"
+date: '2022-04-29'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Parse database data
+```{r}
+dataDir <- "./data/"
+dbCsvPath <- grep("GenomicsCoreUsage_deduplicated.csv", list.files(path = dataDir, full.names = TRUE), value = TRUE)
+dbCsv <- read.csv(dbCsvPath, header = TRUE)
+head(dbCsv)
+```
+
+## Summary stats on db file
+```{r}
+length(unique(dbCsv$project_name))
+uniqueEntryCounts <- sapply(dbCsv, FUN = function(x){length(unique(x))})
+head(uniqueEntryCounts)
+```
+
+```{r}
+hist(as.numeric(dbCsv$creation_year), breaks=1000, xlim =c(2010, 2024), main="Db entries by year", xlab="creation date: year")
+
+dbCsv.uniqueProjectName <- dbCsv[!duplicated(dbCsv$project_name), ]
+hist(as.numeric(dbCsv$creation_year), 
+     breaks=1000, xlim =c(2010, 2023), main="Db entries by year, unique project names only", xlab="creation date: year")
+dbCsv.subset <- dbCsv[!duplicated(dbCsv$project_uid), ]
+hist(as.numeric(dbCsv$creation_year), 
+     breaks=1000, xlim =c(2010, 2023), main="Db entries by year, unique project UIDs only", xlab="creation date: year")
+
+dbCsv.uniqueprojectName.sampleType <- table(dbCsv.uniqueProjectName$sample_type)
+dbCsv.uniqueprojectName.sampleType <- dbCsv.uniqueprojectName.sampleType[order(dbCsv.uniqueprojectName.sampleType, decreasing = TRUE)]
+head(dbCsv.uniqueprojectName.sampleType)
+```
+
+## Check if sample type entries are consistent within a project
+```{r}
+dbCsv[dbCsv$project_uid == 126, "sample_type"]
+
+for (i in 1:50){
+  sample_type_entries <- dbCsv[dbCsv$project_uid == levels(factor(dbCsv$project_uid))[[i]], "sample_type"]
+  print(sample_type_entries)
+  print(levels(factor(dbCsv$project_uid))[[i]])
+}
+```
+
+## Clean up data
+```{r}
+## Parse RNAseq and RNASeq into one string (and similar cases)
+dbCsv[dbCsv$sample_type=="RNASeq", "sample_type"] <- "RNAseq"
+dbCsv[dbCsv$sample_type=="RNA Seq", "sample_type"] <- "RNAseq"
+dbCsv[dbCsv$sample_type=="10XRNASeq_Chromiumv3", "sample_type"] <- "10XRNAseq_Chromiumv3"
+dbCsv[dbCsv$sample_type=="genomic", "sample_type"] <- "DNAseq"
+dbCsv[dbCsv$sample_type=="LibSeq", "sample_type"] <- "libseq"
+
+## Create new category for simplified sample type description
+dbCsv$sample_type_simplified <- dbCsv$sample_type
+
+ChIPseqEntries <- c("ChIP-seq", "ChIP-Seq", "ChIP-seq CUT&RUN", "chipseq", "ChipSeq", "ChIPseq",
+                    "ChIPSeq", "CHiPseq", "CHIPseq", "ChIPSeq SMART", "ChIPSeq_clonetech")
+dbCsv[which(dbCsv$sample_type %in% ChIPseqEntries), "sample_type_simplified"] <- "ChIP-seq"
+
+scRNAseqEntries <- c("TenXChromium", unique(grep("10XRNASeq_Chromium", dbCsv$sample_type, value = TRUE)), "10X",
+                     "10X5prime", "10X VDJ", "10X3primeV3", "10X3primeV3", "10xGenomics/BD",
+                     "10XRNAseq_5prime", "10XRNAseq_Chromiumv3", "RNASeq_10XChromium", "scRNAseq 3Pv3",
+                     "10x VDJ", "10XRNASeq_5prime", "10XRNASeq_5PrimeChromiumv1", "10XRNAseq_Chromium",
+                     "10XVDJ", "10XRNAseq_Chromium", "TotalSeqA_AntiMouseHashtag")
+dbCsv[which(dbCsv$sample_type %in% scRNAseqEntries), "sample_type_simplified"] <- "10XRNAseq_Chromium"
+
+scDNAseqEntries <- c("SMARTPicoPlex")
+dbCsv[which(dbCsv$sample_type %in% scDNAseqEntries), "sample_type_simplified"] <- "scDNAseq"
+
+DNAseqEntries <- c(unique(grep("DNA_NEB", dbCsv$sample_type, value = TRUE)), "Agilent SureSelect XT HS2 Human All Exon V7", 
+                   "17_agilentG753090000_SureSelectXT2C_i7_08bp", "17_agilentG753090000_SureSelectXT2D_i7_08bp", 
+                   "17_agilentG753090000_SureSelectXT2H_i7_08bp", "17_agilentG753090000_SureSelectXT2E_i7_08bp",
+                   "DNA", "DNA_ultraII", "DNAseq", "DNASeq", "exome", "exome_custom", "exome_prep", "exon-CFTR_geneseq",
+                   unique(grep("gDNA", dbCsv$sample_type, value = TRUE)), "WGS", "Whole genome sequencing",
+                   "genomic prep", "genomc", "Genomic", "genomicprep", "genomic low GC", "exon_CFTR_geneseq",
+                   "NEB Ultra II DNA", "NEB_DNA_Ultra_II", "NEB_UltraII_DNA", "DNA_NexteraCapture", "DNAseq/TCR", 
+                   "SMARTerThruPLEX_DNASeq", "SMARTer ThruPLEX DNA-Seq Kit", "SMARTer ThruPLEX DNA", "Genomics",
+                   "exome", "genomic_prep", "NexteraXTNkitV2", "Exome", "NEBDNAUltraII", "NEBDNA_Ultra2",
+                   "Nextera XT", "SMARTerThruPLEX_DNA", "SMARTerThruPLEX_DN", "SMARTer ThruPLEX", "SureSelectXT2",
+                   "SureSelectXT3")
+dbCsv[which(dbCsv$sample_type %in% DNAseqEntries), "sample_type_simplified"] <- "DNAseq"
+
+bulkRNAseqEntries <- c("RNA-Seq", "RNA-Seq(non-PolyA)", "RNA-Seq(PolyA)", "Blood RNA", "clontech_strandedRNAseq",
+                       "custom RNA", "custom_smallRNA", "directional RNASeq", "Directional RNAseq", "Globin Depleted RNA",
+                       "HBT RNA", "Human Liver RNA", "Human RNA", "iGenomics_RNASeq", "IlluminaTruSeqStrandedRNAPolyA",
+                       "mRNA-RNASeq", "mRNA Seq", "mRNAseq", "mRNASeq", "N6mA_NEBNext Ultra RNA",
+                       "N6mA_NEBNext_Ultra_RNA", "NEBRNAUltraII", "NuGen-RNAseq", "NuGen Ovation RNASeq",
+                       "NuGen_RNAseq", "Ovation RNA seq kit", "PolyA/NEBRNAUltraII", "QuantSeq mRNA",
+                       "QuantSeqmRNA", "rand_prime/RNAUltraII", "Ribominus/Stranded RNASeq",
+                       "ribominus_RNASeq", "RNA", "RNA-Seq", "RNA-Seq(non-PolyA)", "RNA-Seq(PolyA)",
+                       "RNA-Seq_Poly-A" , "RNA-seq_ribo_minus", "RNA-Seq_Ribo_minus", "RNA Seq_SMARTerSeq",
+                       "RNA_polyA", "RNA_ribo_deplete",
+                       "rnaseq", "RNASeq (NuGEN)", "RNASeq NEB", "RNAseq-Stranded mRNA", "RNASeq NUGEN", "RNAseq polyA", "RNASeq PolyA",
+                       "RNASeq Ribo  depletion", "RNASeq Ribo minus", "RNASeq Ribominus", "RNAseq-NuGenDR", "RNASeq NuGen", "RNAseq_polA_NEB_Ultra",
+                       "RNAseq_globinclear", "RNASeq_NUGEN", "RNAseq_polA_NEB_Ultra", "RNASeq_PolyA", "RNASeq_ribo_depl", "RNASeq_RiboDepletion",
+                       "RNA seq", "RNASeq_Ribominus", "RNASeq_TruSeq", "RNASeqPolyA", "RNASeqNEBPolyA","RNASeq_Takara", "Total RNA-seq",
+                       "Truseq-RNAseq", "targeted RNASEQ", "TarRNAseq", "RNASeqCustomkit", "SMARTerStrandedPico", "SMARTSeqStranded",
+                       "NEB UltraII w Ribodeplete", "RNASeq_clonetech", "RNASeq_Ribominus_ScriptSeq", "TS Stranded mRNA RNAseq",
+                       "RNASeq_TargetRNAExpression", "RNASeqNEBRibominus", "targeted RNAseq", "Smarter v4", "SMARTseq v4", "SMARTseqv4",
+                       "SMARTSeqHT_RNASeq", "RNASeqRibominus", "PolyA/NEBUltraII", "RNA-Seq_Ribo_minus", "RNA-seq_ribo_minus",
+                       "RNA_polyA", "rnaseq", "SMARTerV4", "NEBRibominus", "RNASeq", "RNA", "RNA Seq", "Globin Depleted RNA",
+                       "RNA-Seq_Ribo_minus", "RNAseq_PolyA", "PolyA/NEBUltraII", "human Human Liver RNA", "PolyA", "ribo-/NEBUltraII",
+                       "QuantSeq", "SMARTer", "SMARTerSeq", "SmartSeq HT", "Smarter", "SMARTseq_HT", "ribo depletion",
+                       "SMARter stranded pico input", "SMARTer v4", "SMARTer V2", "SmartStranded", "Smart Stranded",
+                       "Ribo-/NEBUltraII", "NextflexV4")
+dbCsv[which(dbCsv$sample_type %in% bulkRNAseqEntries), "sample_type_simplified"] <- "RNAseq"
+
+miRNAseqEntries <- c("miRNA", "miR-Trap_miRNA-Seq", "miRNA-Seq", "miRNA (standard)", "miRNAseq", "miRNASeq", "Qiagen miRNASeq",
+                     "microRNA", "miRNA_DNA", "sythhetic_miRNA")
+dbCsv[which(dbCsv$sample_type %in% miRNAseqEntries), "sample_type_simplified"] <- "miRNAseq"
+
+ampliconSeqEntries <- c("Ampli-Seq", "amplicn", "amplicn_pool", "amplicon", "Amplicon", "amplicon_pool", "Amplicon_pool", "amplicon_slayseq",
+                        "ampliseq")
+dbCsv[which(dbCsv$sample_type %in% ampliconSeqEntries), "sample_type_simplified"] <- "ampliconSeq"
+
+CRISPREntries <- c("CRISPR", "crisper_amplico", "crisper_amplicon", "CrisprScreen", "LibSeq_Crispr", "crisper_amplicATACCTGTon")
+dbCsv[which(dbCsv$sample_type %in% CRISPREntries), "sample_type_simplified"] <- "CRISPR"
+
+libseqEntries <- c("library", "Library", "Library-seq", "libraryseq", "librarySeq", "LIBseq", "LIBSeq")
+dbCsv[which(dbCsv$sample_type %in% libseqEntries), "sample_type_simplified"] <- "libseq"
+
+levels(factor(dbCsv[, "sample_type_simplified"]))
+```
+
+```{r}
+explicitlyAnalysedTypes <- c("RNAseq", "miRNAseq", "10XRNAseq_Chromium", "scDNAseq", "libseq", "DNAseq", "CRISPR", "DrugSeq", "ChIP-seq", "ampliconSeq")
+dbCsv[which(!(dbCsv$sample_type_simplified %in% explicitlyAnalysedTypes)), "sample_type_simplified"] <- "Other_or_NA"
+
+# dbCsv[dbCsv$sample_type=="custom", "sample_type_simplified"] <- "Other_or_NA"
+# dbCsv[dbCsv$sample_type=="NGS", "sample_type_simplified"] <- "Other_or_NA"
+# dbCsv[dbCsv$sample_type=="amplicon", "sample_type_simplified"] <- "Other_or_NA"
+# dbCsv[dbCsv$sample_type=="Amplicon", "sample_type_simplified"] <- "Other_or_NA"
+```
+
+## Check Other/NA category for unassigned sample types
+```{r}
+levels(factor(dbCsv[dbCsv$sample_type_simplified=="Other_or_NA", "sample_type"]))
+```
+
+## Temporal analysis of sample type
+```{r}
+#dbCsv$creation_date_year <- substr(dbCsv$creation_date, start = 1, stop = 4)
+dbCsv.uniqueProjectName <- dbCsv[!duplicated(dbCsv$project_uid), ]
+
+yearsInDatabase <- levels(factor(dbCsv.uniqueProjectName$creation_year))
+## From the above years we remove 2011 and 2999 because they each have just a single associated experiment.
+yearsInDatabase <- yearsInDatabase[2:12]
+
+selectedYear <- yearsInDatabase[[1]]
+dbCsv.uniqueprojectName.sampleType.subset <- table(dbCsv.uniqueProjectName[dbCsv.uniqueProjectName$creation_year == selectedYear, "sample_type_simplified"])
+dbCsv.uniqueprojectName.sampleType.subset <- dbCsv.uniqueprojectName.sampleType.subset[order(dbCsv.uniqueprojectName.sampleType.subset, decreasing = TRUE)]
+dbCsv.uniqueprojectName.sampleType.subset <- as.data.frame(dbCsv.uniqueprojectName.sampleType.subset)
+dbCsv.uniqueprojectName.sampleType.subset$Year <- selectedYear
+head(dbCsv.uniqueprojectName.sampleType.subset)
+barplot(dbCsv.uniqueprojectName.sampleType.subset[, 2], main = selectedYear, cex.axis=0.5, las=2)
+axis(1, at=1:nrow(dbCsv.uniqueprojectName.sampleType.subset), labels=dbCsv.uniqueprojectName.sampleType.subset[, 1], las=2, cex.axis=0.5)
+
+dbCsv.uniqueprojectName.sampleType.byYear <- dbCsv.uniqueprojectName.sampleType.subset
+
+for (i in 2:length(yearsInDatabase)){
+  selectedYear <- levels(factor(dbCsv.uniqueProjectName$creation_year))[[i]]
+  dbCsv.uniqueprojectName.sampleType.subset <- table(dbCsv.uniqueProjectName[dbCsv.uniqueProjectName$creation_year == selectedYear, "sample_type_simplified"])
+  dbCsv.uniqueprojectName.sampleType.subset <- dbCsv.uniqueprojectName.sampleType.subset[order(dbCsv.uniqueprojectName.sampleType.subset, decreasing = TRUE)]
+  dbCsv.uniqueprojectName.sampleType.subset <- as.data.frame(dbCsv.uniqueprojectName.sampleType.subset)
+  dbCsv.uniqueprojectName.sampleType.subset$Year <- selectedYear
+  head(dbCsv.uniqueprojectName.sampleType.subset)
+  plot(dbCsv.uniqueprojectName.sampleType.subset[, 1:2], main = selectedYear, cex.axis=0.5, las=2)
+  dbCsv.uniqueprojectName.sampleType.byYear <- rbind(dbCsv.uniqueprojectName.sampleType.byYear, dbCsv.uniqueprojectName.sampleType.subset)
+}
+
+write.csv(dbCsv.uniqueprojectName.sampleType.byYear, file="dbCsv.uniqueprojectName.sampleType_simplified.byYear_042922.csv")
+```
+
+## Plot top experiment/sample types by year
+```{r, fig.width=6, fig.height=4.5}
+dbCsv.uniqueprojectName.sampleType.byYear$Year <- as.numeric(dbCsv.uniqueprojectName.sampleType.byYear$Year)
+head(dbCsv.uniqueprojectName.sampleType.byYear[order(dbCsv.uniqueprojectName.sampleType.byYear$Freq, decreasing = TRUE),], n=20)
+
+par(mar=c(5.1, 4.1, 4.1, 8.1), xpd=TRUE)
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="RNAseq", 3:2]
+plot(df, ylim=c(0, max(df$Freq)))
+lines(df, lty="dotted")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="Other_or_NA", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="grey", pch=20)
+lines(df, lty="solid", col="grey")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="DNAseq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="blue")
+lines(df, lty="dotted", col="blue")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="10XRNAseq_Chromium", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="red")
+lines(df, lty="dotted", col="red")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="libseq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="grey")
+lines(df, lty="dashed", col="grey")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="CRISPR", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="green")
+lines(df, lty="dashed", col="green")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="DrugSeq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="purple")
+lines(df, lty="dashed", col="purple")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="ChIP-seq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="green")
+lines(df, lty="solid", col="green")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="miRNAseq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="orange", pch=20)
+lines(df, lty="dotted", col="orange")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="ampliconSeq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="darkblue", pch=20)
+lines(df, lty="dotted", col="darkblue")
+
+df <- dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Var1=="scDNAseq", 3:2]
+points(df, ylim=c(0, max(df$Freq)), col="cyan", pch=20)
+lines(df, lty="solid", col="cyan")
+
+
+legend("topright",c("RNAseq", "miRNAseq", "DNAseq", "10XRNAseq_Chromium", "scDNAseq", "libseq", "CRISPR", "DrugSeq", "ChIP-seq", "ampliconSeq", "Other_or_NA"), 
+       col = c("black", "orange", "blue", "red", "grey", "cyan","green", "purple", "green", "darkblue", "grey"), 
+       lty = c("dotted", "dotted", "dotted", "dotted", "solid", "dashed", "dashed", "dashed", "solid" , "dotted", "solid"), cex=0.6,
+       inset=c(-0.35,0))
+
+```
+
+## Producing supplementary table for paper
+```{r}
+library("reshape2")
+aggregate(dbCsv.uniqueprojectName.sampleType.byYear$Freq ~ dbCsv.uniqueprojectName.sampleType.byYear$Var1, FUN = sum)
+
+## Duplicate values for 2012 -> have to make unique before casting
+dbCsv.uniqueprojectName.sampleType.byYear[dbCsv.uniqueprojectName.sampleType.byYear$Year==2012, ]
+### Values are identical -> remove duplicate
+dbCsv.uniqueprojectName.sampleType.byYear <- dbCsv.uniqueprojectName.sampleType.byYear[-(1:6), ]
+dbCsv.uniqueprojectName.sampleType.byYear.cast <- dcast(data = dbCsv.uniqueprojectName.sampleType.byYear, Var1 ~ Year, value.var = "Freq")
+#write.csv(as.data.frame(dbCsv.uniqueprojectName.sampleType.byYear.cast), file="dbCsv.uniqueprojectName.sampleType.byYear.cast_042224.csv")
+write.csv(as.data.frame(dbCsv.uniqueprojectName.sampleType.byYear.cast), file="dbCsv.uniqueprojectName.sampleType.byYear.cast_011925.csv")
+```
+
+
+## Analyzing unannotated (other or NA) sample types
+```{r}
+table(dbCsv[dbCsv$sample_type_simplified=="Other_or_NA"&dbCsv$creation_year=="2019", "sample_type"])
+table(dbCsv[dbCsv$sample_type=="SureSelectXT2", "run_name"])
+# Based on the above, SureSelectXT2 can be assigned as DNAseq
+## DriverMap is targeted RNA-seq
+```
+
+
+
+
+
+
