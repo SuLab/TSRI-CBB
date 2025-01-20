@@ -1,0 +1,4 @@
+## This is a file manifest for source data associated with CBB manuscript analyses
+
+1. GenomicsCoreUsage_deduplicated.csv
+This is a table of unique experiments performed in the Genomics Core used as the source data for experiment type analysis.
