@@ -6,3 +6,6 @@ Below is a brief description of each folder in this repository, and how it serve
 
 ## [AnalysisCode](https://github.com/SuLab/TSRI-CBB/tree/main/Manuscript/AnalysisCode) (click title to re-direct)
 This contains code used for analyzing the data and generating the graphs presented in the manuscript.
+
+## [Analysis Source Data](https://github.com/SuLab/TSRI-CBB/tree/main/Manuscript/SourceData) (click title to re-direct)
+This folder contains source data used for summary analyses and plotting.
