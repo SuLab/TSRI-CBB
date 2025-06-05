@@ -2,3 +2,9 @@
 
 ### 1. GenomicsCoreUsage_deduplicated.csv
 # This is a table of unique experiments performed in the Genomics Core used as the source data for experiment type analysis.
+
+### 2. CompBioCoursesEnrollment.csv
+# This is a table of per-academic year counts for the total number of Scripps Research Skaggs Graduate School of Chemical and Biological Sciences courses offered, those which were computational biology focused, the number of enrollments in computational biology courses, the total number of all enrollments that year, and the fraction of computational biology course enrollments relative to total enrollments.
+
+### 3. StudentResearchInterests.csv
+# This is a table of per-academic year counts for the total number of students enrolled in the Scripps Research Skaggs Graduate School of Chemical and Biological Sciences, the number and fraction of students self-identifying as computational biologists.
