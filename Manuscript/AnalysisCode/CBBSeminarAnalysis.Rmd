@@ -27,7 +27,7 @@ library(stringr)
 ## Seminar Attendance
 
 ```{r}
-cbb_seminars <- read.csv(file = "CBB_seminars_list.csv")  ## Reading in seminar data
+cbb_seminars <- read.csv(file = "CBBSeminars.csv")  ## Reading in seminar data
 
 ## Converts dates into numeric year-based representations
 numericDate <- function(day, month, year){

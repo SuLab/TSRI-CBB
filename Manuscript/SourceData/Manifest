@@ -8,3 +8,6 @@
 
 ### 3. StudentResearchInterests.csv
 # This is a table of per-academic year counts for the total number of students enrolled in the Scripps Research Skaggs Graduate School of Chemical and Biological Sciences, the number and fraction of students self-identifying as computational biologists.
+
+### 4. CBBSeminars.csv
+# This is a table with CBB seminar speaker data between Feb 2020 - Nov 2023. Included is information on the date of the seminar, attendance, hosts, topic, standardized keywords, user keywords, department of the speaker, and topical field.

@@ -19,6 +19,7 @@ library(zoo)
 library(dplyr)
 library(scCustomize)
 library(stringr)
+library(ggplot2)
 ```
 
 ## Scripps Research graduate program comp bio/bioinformatics course offerings
@@ -37,3 +38,69 @@ mtext("Academic year", side = 1, line = 6)  ## X axis margin text
 axis(1, at = bp, labels = courses$years, las = 2, line = -0.5, tick = F)  ## X axis label
 axis(2, at = seq(0, 6, by = 1), las = 2, cex = 1.5)
 ```
+
+
+## Scripps Research graduate program course enrollment data
+
+```{r}
+enrollment_summary <- read.csv(file = "../SourceData/CompBioCoursesEnrollment.csv")
+
+scale_factor <- 500
+ggplot(enrollment_summary, aes(x = AcademicYear)) +
+  geom_bar(aes(y = CompCourseEnrollmentCount), stat = "identity", fill = "#D23428", color = "black") +
+  geom_line(aes(y = fractionComp*scale_factor, group = 1), color = "black", size = 1.2) +
+  scale_y_continuous(
+    name = "Computational Biology Course Enrollments",
+    sec.axis = sec_axis(~ . / scale_factor, name = "Fraction of All Course Enrollments")
+  ) +
+  # Draw a custom y-axis line from y = 0 to y = 20
+  geom_segment(aes(x = 0, xend = 0, y = 0, yend = 200),
+               inherit.aes = FALSE, color = "black", size = 0.8) +
+  geom_segment(aes(x = 13.8, xend = 13.8, y = 0, yend = 200),
+               inherit.aes = FALSE, color = "black", size = 0.8) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),          # Left y-axis title color
+        axis.text.y = element_text(color = "#D23428", size = 20, margin = margin(r = 6)),           # Left y-axis tick label color
+        axis.title.y.right = element_blank(),    # Right y-axis title color
+        axis.text.y.right = element_text(color = "black"),      # Right y-axis tick label color)
+        panel.background = element_blank(),   # Remove grey background
+        panel.grid.major = element_blank(),   # Remove major gridlines
+        panel.grid.minor = element_blank(),   # Remove minor gridlines
+        axis.line.y = element_blank(),  #element_line(color = "black"),  # Add solid black axis lines
+        axis.ticks.y = element_line(color = "black"),
+        axis.ticks.length.y = unit(0.3, "cm")
+        )
+```
+
+
+
+## Scripps Research student research areas
+
+```{r}
+studentResearchInterest <- read.csv(file = "../SourceData/StudentResearchInterests.csv")
+
+ggplot(studentResearchInterest[c(5:13),], aes(x = AcademicYear)) +
+  geom_bar(aes(y = compBioStudents), stat = "identity", fill = "#D23428", color = "black") +
+  geom_line(aes(y = proportionCompBioStudents*scale_factor, group = 1), color = "black", size = 1.2) +
+  scale_y_continuous(
+    sec.axis = sec_axis(~ . / scale_factor)
+  ) +
+    # Draw a custom y-axis line from y = 0 to y = 20
+  geom_segment(aes(x = 0, xend = 0, y = 0, yend = 25),
+               inherit.aes = FALSE, color = "black", size = 0.8) +
+  geom_segment(aes(x = 9.8, xend = 9.8, y = 0, yend = 25),
+               inherit.aes = FALSE, color = "black", size = 0.8) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),          
+        axis.text.y = element_text(color = "#D23428", size = 20),           # Left y-axis tick label color
+        axis.title.y.right = element_text(color = "black"),    # Right y-axis title color
+        axis.text.y.right = element_text(color = "black"),      # Right y-axis tick label color)
+        axis.ticks.y = element_line(color = "black"),
+        axis.ticks.length.y = unit(0.3, "cm")
+  )
+```
+
