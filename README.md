@@ -5,7 +5,7 @@
 # Scripps Research CBB (CA and FL)
 This is the Github repository for the Computational Biology and Bioinformatics (CBB) community at Scripps Research, affiliated with the [core track for graduate students](https://education.scripps.edu/graduate/doctoral-program/customizable-curriculum/stbio400-440.html), with the intention of providing TSRI and the larger San Diego bioinformatics community a collaborative network and relevant events. We serve ~300 researchers and enthusiasts.
 <br><br>
-*Our Mission:* We are Scripps Research academic trainees across disciplines working together to (i) enhance knowledge transfer through relevant seminars and workshops and (ii) build a platform for Scripps Research employees and affiliates to connect. We are an open, inclusive organization that adheres to [FAIR practices](https://www.go-fair.org/fair-principles/). Learn and explore more via [our website](http://viperdb.scripps.edu/cbb/#home). All suggestions, questions, and comments are welcome at inewman[at]scripps.edu.
+*Our Mission:* We are Scripps Research academic trainees across disciplines working together to (i) enhance knowledge transfer through relevant seminars and workshops and (ii) build a platform for Scripps Research employees and affiliates to connect. We are an open, inclusive organization that adheres to [FAIR practices](https://www.go-fair.org/fair-principles/). Learn and explore more via [our website](https://www.scripps.edu/about/campus-resources/working-at-scripps-research/campus-interest-groups/computational-biology-bioinformatics/?tab-2-text-content=1&tab-3-events=1&tab-4-text-content=1). All suggestions, questions, and comments are welcome at inewman[at]scripps.edu.
 <br><br>
 *Roles:* If interested in joining CBB leadership please reach out.
 
