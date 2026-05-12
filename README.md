@@ -14,6 +14,9 @@ This is the Github repository for the Computational Biology and Bioinformatics (
 - Data visualization [workshops and resources](https://sabahzero.github.io/dataviz/workshops)
 <br>
 
+## [Scripps Research Hackathon](https://scripps-cbb.github.io)
+A CBB activity on May 29, 2026, organized in partnership with the Scripps Research department of Integrative Structural & Computational Biology (ISCB) and [AWS](https://aws.amazon.com/). The event is open to graduate students, postdocs, staff scientists, and researchers at any level of computational experience, offering hands-on work with agentic AI and cloud services applied to biological and chemical problems using datasets from Scripps labs and open-source resources. Visit [scripps-cbb.github.io](https://scripps-cbb.github.io) for details on the current event and archives of past hackathons.
+
 Below is a brief description of each folder in this repository, and how it serves as a resource. 
 
 ## [Manuscript](https://github.com/SuLab/TSRI-CBB/tree/main/Manuscript) (click title to re-direct)
