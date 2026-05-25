@@ -9,6 +9,8 @@ This is the Github repository for the Computational Biology and Bioinformatics (
 <br><br>
 *Roles:* If interested in joining CBB leadership please reach out.
 
+*Mailing list:* To add yourself, open Outlook > "Go to Groups" > "Discover Groups" > search "cbb" > Join.
+
 *Relevant Resources*<br>
 - Bi-annual [Applied Bioinformatics course](https://github.com/SuLab/Applied-Bioinformatics) (for previous recordings, contact the [Graduate Office](https://education.scripps.edu/about/contact/))
 - Data visualization [workshops and resources](https://sabahzero.github.io/dataviz/workshops)
